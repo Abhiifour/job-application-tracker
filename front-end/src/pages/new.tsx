@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { flushSync } from "react-dom";
+
 import Loading from "../components/Loading";
 import toast from "react-hot-toast";
 
