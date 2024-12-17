@@ -9,10 +9,12 @@ An application built with Reactjs, TypeScript, and Tailwind, designed to provide
 - **Prisma**: ORM.
 - **MongoDB**: Database.
 ## **Features**
+
 -Create an Application
 -Update Application
 -Delete Application
 -Status - Applied , Rejected , Interviewing , Offered
+-
 
 ## Prerequisites
 
