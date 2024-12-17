@@ -4,24 +4,32 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { flushSync } from "react-dom";
+import Loading from "../components/Loading";
+import toast from "react-hot-toast";
 
 export default function New(){
 
     const editId = useSelector((state : any) => state.application)
 
-
+    const[loading ,setLoading] = useState(true)
     const [position , setPosition] = useState( "");
     const [company , setCompany] = useState("");
-    const [compensation , setCompensation] = useState(0);
+    const [compensation , setCompensation] = useState<number>();
     const [location , setLocation] = useState("");
     const [status , setStatus] = useState("");
     const navigate = useNavigate()
     
 
     useEffect( ()=>{
+        setTimeout(()=>{
+            setLoading(false)
+        },500)
       try {
         if(editId.id !== 0){
+            
            
+
             async function getData(){
                 const response = await axios.post('https://job-application-tracker-4yti.onrender.com/find',{id :editId.id})
                 setPosition(response.data.position)
@@ -31,6 +39,7 @@ export default function New(){
                 setStatus(response.data.status)
             }
             getData()
+           
            }
       } catch (error) {
         console.log(error)
@@ -52,20 +61,29 @@ export default function New(){
         } catch (error) {
             console.log(error)
         }
+        toast('Application Deleted !', {
+            icon: '👋🏼',
+        });
     }
     
 
     async function handleSubmit (e : React.FormEvent){
         e.preventDefault()
         try {
-            if(editId.id === 0)
-            await axios.post('https://job-application-tracker-4yti.onrender.com/create',{
-                position,
-                company,
-                compensation,
-                location,
-                status
-            })
+            if(editId.id === 0){
+                await axios.post('https://job-application-tracker-4yti.onrender.com/create',{
+                    position,
+                    company,
+                    compensation,
+                    location,
+                    status
+                    
+                })
+                toast('Application Added!', {
+                    icon: '👏',
+                });
+            }
+           
             else{
                 await axios.put('https://job-application-tracker-4yti.onrender.com/update',{
                     id: editId.id,
@@ -75,8 +93,10 @@ export default function New(){
                     location,
                     status
                 })
+                
             }
             navigate("/dashboard")
+           
         } catch (error) {
             console.log(error)
         }
@@ -90,7 +110,7 @@ export default function New(){
             <Nav/>
             
             <div className="text-primary font-medium text-[26px] w-[700px] m-auto p-4 font-poppins" >
-                Add an Application
+            {editId.id !== 0 ?"UPDATE APPLICATION":"ADD APPLICATION"}
             </div>
             <div className="w-[700px] p-4 m-auto">
             <div className="rounded-lg hover:bg-nav w-[100px] text-[18px] p-2 text-center mb-4 cursor-pointer flex items-center justify-center" onClick={() => navigate('/dashboard')}>
@@ -99,7 +119,8 @@ export default function New(){
             </div>
                 Back
             </div>
-           <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+            {
+                loading ? <Loading/> : <form onSubmit={handleSubmit} className="flex flex-col gap-6">
                 <div className="flex flex-col gap-3">
                     <label htmlFor="postion" className="text-[16px]">Job Postion</label>
                     <input type="text" id="position" placeholder="eg. SDE" className="p-3 text-[16px] rounded-lg bg-white border"value={position} onChange={(e)=>setPosition(e.target.value)} />
@@ -126,13 +147,15 @@ export default function New(){
                     </select>
                 </div>
                 <div className="flex gap-6">
-                <button className="p-2 w-[120px] text-[16px] border rounded-lg bg-primary text-white cursor-pointer" onClick={handleSubmit}>{editId !== 0 ?"UPDATE":"SAVE"}</button>
+                <button className="p-2 w-[120px] text-[16px] border rounded-lg bg-primary text-white cursor-pointer" onClick={handleSubmit}>{editId.id !== 0 ?"UPDATE":"SAVE"}</button>
                  {
                     editId.id !== 0 ?
                     <button className="p-2 w-[120px] text-[16px] border rounded-lg bg-primary text-white cursor-pointer" onClick={handleDelete}>DELETE</button> : <div></div>
                 }
                 </div>
             </form>
+            }
+           
            </div>
         </div>
     )
