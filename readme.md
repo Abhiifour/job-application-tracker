@@ -29,7 +29,7 @@ Ensure the following tools are installed on your system:
 ### 1. Clone the Repository
 If this project is hosted on a Git repository, clone it using:
 ```bash
-git clone <https://github.com/Abhiifour/Next-assignment>
+git clone <https://github.com/Abhiifour/job-application-tracker>
 cd <front-end>
 
 ```
