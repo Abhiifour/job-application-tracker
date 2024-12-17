@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 export default function Dashboard(){
 
     async function getApplications (){
-        const applications = await axios.get('http://localhost:3000/')
+        const applications = await axios.get('https://job-application-tracker-4yti.onrender.com/')
         return applications;
     }
     

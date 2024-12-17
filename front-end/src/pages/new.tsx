@@ -23,7 +23,7 @@ export default function New(){
         if(editId.id !== 0){
            
             async function getData(){
-                const response = await axios.post('http://localhost:3000/find',{id :editId.id})
+                const response = await axios.post('https://job-application-tracker-4yti.onrender.com/find',{id :editId.id})
                 setPosition(response.data.position)
                 setCompany(response.data.company)
                 setCompensation(response.data.compensation)
@@ -42,7 +42,7 @@ export default function New(){
         try {
 
             async function deleteData(){
-                await axios.post('http://localhost:3000/delete',{id :editId.id})
+                await axios.post('https://job-application-tracker-4yti.onrender.com/delete',{id :editId.id})
               
             }
 
@@ -59,7 +59,7 @@ export default function New(){
         e.preventDefault()
         try {
             if(editId.id === 0)
-            await axios.post('http://localhost:3000/create',{
+            await axios.post('https://job-application-tracker-4yti.onrender.com/create',{
                 position,
                 company,
                 compensation,
@@ -67,7 +67,7 @@ export default function New(){
                 status
             })
             else{
-                await axios.put('http://localhost:3000/update',{
+                await axios.put('https://job-application-tracker-4yti.onrender.com/update',{
                     id: editId.id,
                     position,
                     company,
