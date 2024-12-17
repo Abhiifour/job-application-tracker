@@ -10,11 +10,11 @@ An application built with Reactjs, TypeScript, and Tailwind, designed to provide
 - **MongoDB**: Database.
 ## **Features**
 
--Create an Application
--Update Application
--Delete Application
--Status - Applied , Rejected , Interviewing , Offered
--
+- **Create** an Application.
+- **Update** Application.
+- **Delete** Application.
+- **Status** - Applied , Rejected , Interviewing , Offered.
+
 
 ## Prerequisites
 
